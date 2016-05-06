@@ -59,11 +59,11 @@ public class Player extends Entity{
 		}
 
 		else if(key == KeyEvent.VK_A){
-			velY=0;
+			velX=0;
 		}
 
 		else if(key == KeyEvent.VK_S){
-			velX=0;
+			velY=0;
 		}
 
 		else if(key == KeyEvent.VK_D){
