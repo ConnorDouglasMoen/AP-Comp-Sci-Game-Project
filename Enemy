@@ -10,12 +10,12 @@ public class Enemy extends Entity{
 
 	public Enemy(int x, int y) {
 		super(x, y);
-		// TODO Auto-generated constructor stub
+
 	}
 	
 	public void update(){
-		
-		
+		y+=2;
+		checkOffScreen();
 	}
 	
 	public void draw(Graphics2D g2d){
@@ -34,5 +34,16 @@ public class Enemy extends Entity{
 		//		getEnemyImg().getHeight(null));
 		
 		return new Rectangle(x+5, y+5, 20, 20);
+	}
+	
+	public void checkOffScreen(){
+		if (y>620){
+			removeEnemy(e);//This does not work yet still have to figure out how to pick the right enemy to delet in the Array List
+		}
+	}
+	
+	public static void removeEnemy(Enemy e){
+		GameFrame.enemies.remove(e);
+
 	}
 }
