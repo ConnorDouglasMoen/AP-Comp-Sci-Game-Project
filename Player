@@ -2,12 +2,13 @@ import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
 
 public class Player extends Entity{
 	
-	int velX=0, velY=0, speed=2;
+	int velX=0, velY=0, speed=2, lives=25, level=1;
 
 	public Player(int x, int y) {
 		super(x, y);
@@ -17,12 +18,14 @@ public class Player extends Entity{
 	public void update(){
 		y += velY;
 		x += velX;
-		
+		checkCollisions();
 	}
 	
 	public void draw(Graphics2D g2d){
 		g2d.drawImage(getPlayerImg(),  x,  y,  null);
 		g2d.draw(getBounds());
+		g2d.drawString("Level "+level, 220, 25);
+		g2d.drawString(String.valueOf(lives), 300, 25);
 	}
 	
 	public Image getPlayerImg(){
@@ -34,19 +37,19 @@ public class Player extends Entity{
 	public void keyPressed(KeyEvent e){
 		int key=e.getKeyCode();
 		
-		if(key == KeyEvent.VK_W){
+		if(key == KeyEvent.VK_UP){
 			velY=-speed;
 		}
 		
-		else if(key == KeyEvent.VK_S){
+		else if(key == KeyEvent.VK_DOWN){
 			velY=speed;
 		}
 		
-		else if(key == KeyEvent.VK_A){
+		else if(key == KeyEvent.VK_LEFT){
 			velX=-speed;
 		}
 		
-		else if(key == KeyEvent.VK_D){
+		else if(key == KeyEvent.VK_RIGHT){
 			velX=speed;
 		}
 	}
@@ -54,22 +57,39 @@ public class Player extends Entity{
 	public void keyReleased(KeyEvent e){
 		int key=e.getKeyCode();
 		
-		if(key == KeyEvent.VK_W){
+		if(key == KeyEvent.VK_UP){
 			velY=0;
 		}
 
-		else if(key == KeyEvent.VK_A){
+		else if(key == KeyEvent.VK_LEFT){
 			velX=0;
 		}
 
-		else if(key == KeyEvent.VK_S){
+		else if(key == KeyEvent.VK_DOWN){
 			velY=0;
 		}
 
-		else if(key == KeyEvent.VK_D){
+		else if(key == KeyEvent.VK_RIGHT){
 			velX=0;
 		}
 	}//End of keyReleased
+	
+	public void checkCollisions(){
+		ArrayList<Enemy> enemies = GameFrame.getEnemyList();
+		for (int i=0; i<enemies.size(); i++){
+			Enemy tempEnemy = enemies.get(i);
+			if (getBounds().intersects(enemies.get(i).getBounds())){
+					lives--;
+					
+					if(lives==0){
+						System.out.println("GAME OVER");
+						System.exit(0);
+					}
+			}
+			
+		}
+		
+	}
 	
 	public Rectangle getBounds(){
 		//return new Rectangle(x, y, getPlayerImg().getWidth(null), getPlayerImg().getHeight(null));
