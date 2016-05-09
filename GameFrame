@@ -9,6 +9,7 @@ import java.awt.*;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
@@ -16,22 +17,23 @@ public class GameFrame extends JPanel implements ActionListener{
 
 	Timer mainTimer;
 	Player player;
-	ArrayList<Enemy> enemies = new ArrayList<Enemy>();
+	static ArrayList<Enemy> enemies = new ArrayList<Enemy>();
 	Random r = new Random();
 	int enemyCount=5;
+	int level=1;
+	
 	
 	public GameFrame(){
 		setFocusable(true);
 		
 		mainTimer = new Timer(10, this);
 		mainTimer.start();
-		player = new Player(100, 100);
+		player = new Player(230, 530);
 		addKeyListener(new KeyAdapt(player));
 		
-		for (int i=0; i<enemyCount; i++){
-			addEnemy(new Enemy(r.nextInt(800), r.nextInt(600)));
-			
-		}
+		
+		startGame();
+		
 		
 	}
 	
@@ -41,8 +43,8 @@ public class GameFrame extends JPanel implements ActionListener{
 		Graphics2D g2d= (Graphics2D) g;
 		
 		player.draw(g2d);
-		Enemy e = new Enemy(200, 400);
-		e.draw(g2d);
+		//Enemy e = new Enemy(200, 400);
+		//e.draw(g2d);
 		for (int i=0; i<enemies.size(); i++){
 			Enemy tempEnemy = enemies.get(i);
 			tempEnemy.draw(g2d);
@@ -53,6 +55,11 @@ public class GameFrame extends JPanel implements ActionListener{
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		player.update();
+		for (int i=0; i< enemies.size(); i++){
+			Enemy tempEnemy = enemies.get(i);
+			tempEnemy.update();
+		}
+		checkEnd();
 		repaint();
 		
 		
@@ -61,5 +68,29 @@ public class GameFrame extends JPanel implements ActionListener{
 	public void addEnemy(Enemy e){
 		
 		enemies.add(e);
+	}
+	
+	public static ArrayList<Enemy> getEnemyList(){
+		
+		return enemies;
+	}
+	
+	public void startGame(){
+		enemyCount=level*5;
+		for (int i=0; i<enemyCount; i++){
+			addEnemy(new Enemy(r.nextInt(480), -10 + -r.nextInt(600)));
+		}
+	}//End of start game
+	
+	public void checkEnd(){
+		if (enemies.size() ==0){
+			level++;
+			enemies.clear();
+			JOptionPane.showMessageDialog(null, "Next Level");
+			startGame();
+		}
+		
+		
+		
 	}
 }
