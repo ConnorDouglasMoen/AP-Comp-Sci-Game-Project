@@ -20,7 +20,7 @@ public class GameFrame extends JPanel implements ActionListener{
 	static ArrayList<Enemy> enemies = new ArrayList<Enemy>();
 	Random r = new Random();
 	int enemyCount=5;
-	int level=1;
+	static int level=1;
 	
 	
 	public GameFrame(){
@@ -33,6 +33,7 @@ public class GameFrame extends JPanel implements ActionListener{
 		
 		
 		startGame();
+		
 		
 		
 	}
@@ -50,6 +51,8 @@ public class GameFrame extends JPanel implements ActionListener{
 			tempEnemy.draw(g2d);
 			
 		}
+		Enemy e = new Enemy(enemyCount, enemyCount);
+		g2d.draw(e.getBounderies());
 	}
 
 	@Override
@@ -86,7 +89,7 @@ public class GameFrame extends JPanel implements ActionListener{
 		if (enemies.size() ==0){
 			level++;
 			enemies.clear();
-			JOptionPane.showMessageDialog(null, "Next Level");
+			JOptionPane.showMessageDialog(null, "On to level "+level);
 			startGame();
 		}
 		
