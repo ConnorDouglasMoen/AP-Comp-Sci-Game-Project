@@ -1,11 +1,35 @@
+import java.util.concurrent.TimeUnit;
 import javax.swing.JFrame;
 
-public class Main {
+public class Main implements Runnable {
 
 	
 	public static void main(String[] args) {
 		JFrame frame = new JFrame("TestGame");
 		JFrame frame2 = new JFrame("Info");
+		
+		Thread score = new Thread() {
+			public void run() {
+				// TODO Auto-generated method stub
+				
+				int Score = 0;
+				while (true) {
+					System.out.println(Score);
+					//System.out.println(Score);
+					//No idea what this try/catch dealio means, but I cannot throw an exception for the TimeUnit function, as the run method must match what is in Runnable.
+					try {
+						TimeUnit.SECONDS.sleep(1);
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					Score += 100;
+				}
+				
+			}
+		} ;
+		
+		score.start();
 		
 		frame.setSize(500, 600);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -15,5 +39,14 @@ public class Main {
 		//frame2.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		//frame2.setVisible(true);
 	}
+
+	@Override
+	public void run() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	
+
 
 }
