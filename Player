@@ -1,3 +1,4 @@
+import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Rectangle;
@@ -8,7 +9,7 @@ import javax.swing.ImageIcon;
 
 public class Player extends Entity{
 	
-	int velX=0, velY=0, speed=2, lives=25;
+	int velX=0, velY=0, speed=2, lives=75;
 
 	public Player(int x, int y) {
 		super(x, y);
@@ -19,13 +20,27 @@ public class Player extends Entity{
 		y += velY;
 		x += velX;
 		checkCollisions();
+		checkOffScreen();
 	}
 	
 	public void draw(Graphics2D g2d){
 		g2d.drawImage(getPlayerImg(),  x,  y,  null);
 		g2d.draw(getBounds());
 		g2d.drawString("Level "+GameFrame.level, 220, 25);
-		g2d.drawString(String.valueOf(lives), 300, 25);
+		
+		
+		
+		if(lives>45){
+		g2d.setColor(Color.GREEN);
+		}
+		else if(lives>25){
+			g2d.setColor(Color.YELLOW);
+		}
+		else{
+			g2d.setColor(Color.red);
+		}
+		
+		g2d.fillRect(400, 20, lives, 15);
 	}
 	
 	public Image getPlayerImg(){
@@ -82,6 +97,7 @@ public class Player extends Entity{
 					lives--;
 					
 					if(lives==0){
+						System.out.println("You made it to level "+GameFrame.level);
 						System.out.println("GAME OVER");
 						System.exit(0);
 					}
@@ -91,11 +107,51 @@ public class Player extends Entity{
 		
 	}
 	
+	public void checkOffScreen(){
+		if(getBounds().intersects(offRight())){
+			velX=-2;
+			
+			/*lives--;
+			if(lives==0){
+				System.out.println("You made it to level "+GameFrame.level);
+				System.out.println("GAME OVER");
+				System.exit(0);
+			}*/
+			
+		}
+		else if (getBounds().intersects(offLeft())){
+			velX=2;
+			
+			/*lives--;
+			if(lives==0){
+				System.out.println("You made it to level "+GameFrame.level);
+				System.out.println("GAME OVER");
+				System.exit(0);
+			}*/
+		}
+		else if(getBounds().intersects(offBottom())){
+			velY=-2;
+		}
+		
+	}
+	
 	public Rectangle getBounds(){
 		//return new Rectangle(x, y, getPlayerImg().getWidth(null), getPlayerImg().getHeight(null));
 		
 		return new Rectangle(x, y, 25, 25);
 		
+	}
+	
+	public Rectangle offRight(){
+		return new Rectangle(490, -5, 200, 600);
+	}
+	
+	public Rectangle offLeft(){
+		return new Rectangle(-200, -5, 195, 600);
+	}
+	
+	public Rectangle offBottom(){
+		return new Rectangle(-5, 575, 600, 200);
 	}
 
 
