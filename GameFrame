@@ -18,8 +18,9 @@ public class GameFrame extends JPanel implements ActionListener{
 	Timer mainTimer;
 	Player player;
 	static ArrayList<Enemy> enemies = new ArrayList<Enemy>();
+	static ArrayList<Enemy> greenEnemies = new ArrayList<Enemy>();
 	Random r = new Random();
-	int enemyCount=5;
+	int enemyCount=5, greenEnemyCount=2;
 	static int level=1;
 	
 	
@@ -44,8 +45,7 @@ public class GameFrame extends JPanel implements ActionListener{
 		Graphics2D g2d= (Graphics2D) g;
 		
 		player.draw(g2d);
-		//Enemy e = new Enemy(200, 400);
-		//e.draw(g2d);
+		
 		for (int i=0; i<enemies.size(); i++){
 			Enemy tempEnemy = enemies.get(i);
 			tempEnemy.draw(g2d);
@@ -88,6 +88,7 @@ public class GameFrame extends JPanel implements ActionListener{
 	public void checkEnd(){
 		if (enemies.size() ==0){
 			level++;
+			greenEnemyCount+=2;
 			enemies.clear();
 			JOptionPane.showMessageDialog(null, "On to level "+level);
 			startGame();
