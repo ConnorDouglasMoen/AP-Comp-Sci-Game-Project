@@ -1,0 +1,63 @@
+import java.awt.Color;
+import java.awt.Graphics2D;
+import java.awt.Image;
+import java.awt.Rectangle;
+import java.util.ArrayList;
+
+import javax.swing.ImageIcon;
+
+public class GreenEnemy extends Enemy{
+
+int velX=0, velY=0, speed=5;
+	
+
+	public GreenEnemy(int x, int y) {
+		super(x, y);
+
+	}
+	
+	public void update(){
+		y+=speed;
+		checkOffScreen();
+	}
+	
+	public void draw(Graphics2D g2d){
+		g2d.setColor(Color.BLACK);
+		g2d.drawImage(getEnemyImg(), x, y, null);
+		g2d.draw(getBounds());
+		g2d.drawRect(400, 20, 75, 15);
+	}
+	
+	public Image getEnemyImg(){
+		
+		ImageIcon ic = new ImageIcon("C:/GameImages/GreenSquare.png");
+		return ic.getImage();
+	}
+	
+	public Rectangle getBounds(){
+		//return new Rectangle(x, y, getEnemyImg().getWidth(null), 
+		//		getEnemyImg().getHeight(null));
+		
+		return new Rectangle(x, y, 15, 15);
+	}
+	
+	public void checkOffScreen(){
+		ArrayList<Enemy> greenEnemies = GameFrame.getEnemyList();
+		for (int i=0; i<greenEnemies.size(); i++){
+			Enemy tempEnemy = greenEnemies.get(i);
+			if (getBounderies().intersects(greenEnemies.get(i).getBounds())){
+				//GameFrame.GreenEnemies.remove(i);
+			}
+		}
+	}
+	
+	public static void removeGreenEnemy(Enemy e){
+		GameFrame.enemies.remove(e);
+
+	}
+	
+	public Rectangle getBounderies(){
+		return new Rectangle (-5, 600, 800, 200);
+	}
+
+}
