@@ -5,8 +5,10 @@ public class Main implements Runnable {
 
 	
 	public static void main(String[] args) {
-		JFrame frame = new JFrame("TestGame");
+		JFrame frame = new JFrame("Cubeiga");
+		//Sets name of window name not finalized
 		JFrame frame2 = new JFrame("Info");
+		//Not being used right now may be used later for scoring information
 		
 		Thread score = new Thread() {
 			public void run() {
@@ -32,6 +34,7 @@ public class Main implements Runnable {
 		score.start();
 		
 		frame.setSize(500, 600);
+		//Above sets the size of the game frame
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.add(new GameFrame());
 		frame.setVisible(true);
