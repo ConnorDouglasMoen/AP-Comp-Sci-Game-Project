@@ -10,7 +10,7 @@ import javax.swing.ImageIcon;
 public class Player extends Entity{
 	
 	int velX=0, velY=0, speed=2, lives=75;
-
+		//sets the velocity and speed and lives to their starting values
 	public Player(int x, int y) {
 		super(x, y);
 		update();
@@ -21,32 +21,37 @@ public class Player extends Entity{
 		x += velX;
 		checkCollisions();
 		checkOffScreen();
+		//updates the location of the player based on what key you pressed
 	}
 	
 	public void draw(Graphics2D g2d){
 		g2d.drawImage(getPlayerImg(),  x,  y,  null);
-		g2d.draw(getBounds());
+		//draws player
+		//g2d.draw(getBounds());
 		g2d.drawString("Level "+GameFrame.level, 220, 25);
-		
-		
-		
+		//Above draws the level on the top middle of the screen
 		if(lives>45){
 		g2d.setColor(Color.GREEN);
+		//Sets health bar color to green if it has high health
 		}
 		else if(lives>25){
 			g2d.setColor(Color.YELLOW);
+			//Sets health bar color to yellow if there is less than 45 health
 		}
 		else{
 			g2d.setColor(Color.red);
+			//sets health bar color to red if health is equal to 26
 		}
 		
 		g2d.fillRect(400, 20, lives, 15);
+		//Draws the health bar with the correct color based on health left
 	}
 	
 	public Image getPlayerImg(){
 		
 		ImageIcon ic = new ImageIcon("C:/GameImages/Ship2.png");
 		return ic.getImage();
+		//gets player image
 	}
 	
 	public void keyPressed(KeyEvent e){
@@ -54,18 +59,22 @@ public class Player extends Entity{
 		
 		if(key == KeyEvent.VK_UP){
 			velY=-speed;
+			//moves player up if up key is pressed
 		}
 		
 		else if(key == KeyEvent.VK_DOWN){
 			velY=speed;
+			//moves player down if down key is pressed
 		}
 		
 		else if(key == KeyEvent.VK_LEFT){
 			velX=-speed;
+			//moves player left if left key is pressed
 		}
 		
 		else if(key == KeyEvent.VK_RIGHT){
 			velX=speed;
+			//moves player right if right key is pressed
 		}
 	}
 	
@@ -74,18 +83,22 @@ public class Player extends Entity{
 		
 		if(key == KeyEvent.VK_UP){
 			velY=0;
+			//Stops player from moving when key is released
 		}
 
 		else if(key == KeyEvent.VK_LEFT){
 			velX=0;
+			//Stops player from moving when key is released
 		}
 
 		else if(key == KeyEvent.VK_DOWN){
 			velY=0;
+			//Stops player from moving when key is released
 		}
 
 		else if(key == KeyEvent.VK_RIGHT){
 			velX=0;
+			//Stops player from moving when key is released
 		}
 	}//End of keyReleased
 	
@@ -95,11 +108,12 @@ public class Player extends Entity{
 			Enemy tempEnemy = enemies.get(i);
 			if (getBounds().intersects(enemies.get(i).getBounds())){
 					lives--;
-					
+					//Takes away health if you run into an enemy
 					if(lives==0){
 						System.out.println("You made it to level "+GameFrame.level);
 						System.out.println("GAME OVER");
 						System.exit(0);
+						//Runs if you run out of health
 					}
 			}
 			
@@ -110,7 +124,7 @@ public class Player extends Entity{
 	public void checkOffScreen(){
 		if(getBounds().intersects(offRight())){
 			velX=-2;
-			
+			//Stops you from going of to the right
 			/*lives--;
 			if(lives==0){
 				System.out.println("You made it to level "+GameFrame.level);
@@ -121,7 +135,7 @@ public class Player extends Entity{
 		}
 		else if (getBounds().intersects(offLeft())){
 			velX=2;
-			
+			//stops you from going of the screen to the left
 			/*lives--;
 			if(lives==0){
 				System.out.println("You made it to level "+GameFrame.level);
@@ -131,27 +145,31 @@ public class Player extends Entity{
 		}
 		else if(getBounds().intersects(offBottom())){
 			velY=-2;
+			//stops you from going off the bottom of the screen
 		}
 		
 	}
 	
 	public Rectangle getBounds(){
 		//return new Rectangle(x, y, getPlayerImg().getWidth(null), getPlayerImg().getHeight(null));
-		
+		//Gives boundaries of player
 		return new Rectangle(x, y, 25, 25);
 		
 	}
 	
 	public Rectangle offRight(){
 		return new Rectangle(490, -5, 200, 600);
+		//Gets boundaries of right side of the screen
 	}
 	
 	public Rectangle offLeft(){
 		return new Rectangle(-200, -5, 195, 600);
+		//Gets boundaries of left side of the screen
 	}
 	
 	public Rectangle offBottom(){
 		return new Rectangle(-5, 575, 600, 200);
+		//Gets boundaries of the bottom of the screen
 	}
 
 
