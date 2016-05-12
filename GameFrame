@@ -16,13 +16,16 @@ import javax.swing.Timer;
 public class GameFrame extends JPanel implements ActionListener{
 
 	Timer mainTimer;
+	//timer so the game continues to update as you play
 	Player player;
 	static ArrayList<Enemy> enemies = new ArrayList<Enemy>();
+	//Array list for red eneimes
 	static ArrayList<Enemy> greenEnemies = new ArrayList<Enemy>();
+	//Array list for green eneimes
 	Random r = new Random();
 	int enemyCount=5, greenEnemyCount=2;
+	//Sets count for each of the enemies to start
 	static int level=1;
-	
 	
 	public GameFrame(){
 		setFocusable(true);
@@ -31,12 +34,9 @@ public class GameFrame extends JPanel implements ActionListener{
 		mainTimer.start();
 		player = new Player(230, 530);
 		addKeyListener(new KeyAdapt(player));
-		
+		//Starts timer and places player in starting location
 		
 		startGame();
-		
-		
-		
 	}
 	
 	public void paint(Graphics g) {
@@ -45,14 +45,15 @@ public class GameFrame extends JPanel implements ActionListener{
 		Graphics2D g2d= (Graphics2D) g;
 		
 		player.draw(g2d);
-		
+		//Draws player
 		for (int i=0; i<enemies.size(); i++){
 			Enemy tempEnemy = enemies.get(i);
 			tempEnemy.draw(g2d);
-			
+			//Adds red square enemies
 		}
 		Enemy e = new Enemy(enemyCount, enemyCount);
 		g2d.draw(e.getBounderies());
+		//Draws bottom boundary so enemies are deleted as the go off screen
 	}
 
 	@Override
@@ -61,20 +62,19 @@ public class GameFrame extends JPanel implements ActionListener{
 		for (int i=0; i< enemies.size(); i++){
 			Enemy tempEnemy = enemies.get(i);
 			tempEnemy.update();
+			//updates the location of the enemies is the array list
 		}
 		checkEnd();
 		repaint();
-		
-		
 	}
 	
 	public void addEnemy(Enemy e){
-		
+		//adds a red enemy to the array list
 		enemies.add(e);
 	}
 	
 	public static ArrayList<Enemy> getEnemyList(){
-		
+		//adds a green enemy to its array list
 		return enemies;
 	}
 	
@@ -83,6 +83,7 @@ public class GameFrame extends JPanel implements ActionListener{
 		for (int i=0; i<enemyCount; i++){
 			addEnemy(new Enemy(r.nextInt(480), -10 + -r.nextInt(600)));
 		}
+		//Starts the game sets the enemy count and randomly places the enemies
 	}//End of start game
 	
 	public void checkEnd(){
@@ -92,6 +93,7 @@ public class GameFrame extends JPanel implements ActionListener{
 			enemies.clear();
 			JOptionPane.showMessageDialog(null, "On to level "+level);
 			startGame();
+			//Checks to see if all enemies have gone off the screen increases level and displays message if true
 		}
 		
 		
