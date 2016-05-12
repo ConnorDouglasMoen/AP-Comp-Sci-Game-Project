@@ -11,11 +11,10 @@ public class Entity {
 	
 	
 	public void update(){
-		
+		//to be used in the classes that extend Entity
 	}//End of update
 	
 	public void draw(Graphics2D g2d){
-		
-		
+		//To be used int the classes that extend Entity
 	}//End of Draw
 }
