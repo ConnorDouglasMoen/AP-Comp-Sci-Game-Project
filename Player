@@ -118,8 +118,23 @@ public class Player extends Entity{
 			}
 			
 		}
+		ArrayList<GreenEnemy> greenEnemies = GameFrame.getGreenEnemyList();
+		for (int i=0; i<greenEnemies.size(); i++){
+			Enemy tempGreenEnemy = greenEnemies.get(i);
+			if (getBounds().intersects(greenEnemies.get(i).getBounds())){
+					lives--;
+					//Takes away health if you run into an enemy
+					if(lives==0){
+						System.out.println("You made it to level "+GameFrame.level);
+						System.out.println("GAME OVER");
+						System.exit(0);
+						//Runs if you run out of health
+					}
+			}
+			
+		}
 		
-	}
+	}//End of check Collisions
 	
 	public void checkOffScreen(){
 		if(getBounds().intersects(offRight())){
