@@ -9,7 +9,7 @@ import javax.swing.ImageIcon;
 public class Enemy extends Entity{
 	
 	int velX=0, velY=0, speed=2;
-	
+	//Sets the velocity and speed of the red enemy
 
 	public Enemy(int x, int y) {
 		super(x, y);
@@ -19,19 +19,24 @@ public class Enemy extends Entity{
 	public void update(){
 		y+=2;
 		checkOffScreen();
+		//updates the y coordinate of the red enemy 
 	}
 	
 	public void draw(Graphics2D g2d){
 		g2d.setColor(Color.BLACK);
 		g2d.drawImage(getEnemyImg(), x, y, null);
+		//gets picture of the red square
 		g2d.draw(getBounds());
+		//draws outline on square to be used to check if it goes off screen or hits the player
 		g2d.drawRect(400, 20, 75, 15);
+		//draws black outline of health bar
 	}
 	
 	public Image getEnemyImg(){
 		
 		ImageIcon ic = new ImageIcon("C:/GameImages/square.png");
 		return ic.getImage();
+		//pulls image from c drive of computer
 	}
 	
 	public Rectangle getBounds(){
@@ -39,6 +44,7 @@ public class Enemy extends Entity{
 		//		getEnemyImg().getHeight(null));
 		
 		return new Rectangle(x+5, y+5, 20, 20);
+		//returns the boundaries of the red enemy
 	}
 	
 	public void checkOffScreen(){
@@ -48,15 +54,17 @@ public class Enemy extends Entity{
 			if (getBounderies().intersects(enemies.get(i).getBounds())){
 				GameFrame.enemies.remove(i);
 			}
-		}
+		}//runs through the array list of red enemies and checks if they are off screen
+		//if they are off screen they are deleted
 	}
 	
 	public static void removeEnemy(Enemy e){
 		GameFrame.enemies.remove(e);
-
+		//removes red enemy from the array list
 	}
 	
 	public Rectangle getBounderies(){
 		return new Rectangle (-5, 600, 800, 200);
+		//returns rectangle that marks the bottom of the screen
 	}
 }
