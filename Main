@@ -1,22 +1,27 @@
+import java.awt.Color;
 import java.util.concurrent.TimeUnit;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 public class Main implements Runnable {
-
+	
+	static int Score=0;
+	static JFrame frame = new JFrame("Cubeiga");
+	//Sets name of window name not finalized
 	
 	public static void main(String[] args) {
-		JFrame frame = new JFrame("Cubeiga");
-		//Sets name of window name not finalized
+		
 		JFrame frame2 = new JFrame("Info");
 		//Not being used right now may be used later for scoring information
+
 		
 		Thread score = new Thread() {
 			public void run() {
 				// TODO Auto-generated method stub
 				
-				int Score = 0;
+				
 				while (true) {
-					System.out.println(Score);
+					//System.out.println(Score);
 					//System.out.println(Score);
 					//No idea what this try/catch dealio means, but I cannot throw an exception for the TimeUnit function, as the run method must match what is in Runnable.
 					try {
@@ -33,6 +38,7 @@ public class Main implements Runnable {
 		
 		score.start();
 		
+		JOptionPane.showMessageDialog(null, "Welcome \nhighscores\n1.Slavik lvl 20");
 		frame.setSize(500, 600);
 		//Above sets the size of the game frame
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -47,6 +53,10 @@ public class Main implements Runnable {
 	public void run() {
 		// TODO Auto-generated method stub
 		
+	}
+	
+	public void setBlack(){
+		frame.setBackground(Color.black);
 	}
 
 	
