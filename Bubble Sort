@@ -12,34 +12,13 @@ public class BubbleSort {
 		int temp=num.get(x);
 		num.set(x, num.get(y));
 		num.set(y, temp);
-		
+		//Will be called by bubble
 		
 	}//End of Swap
 	
 	public void Bubble(){
+	int x=0, k=0;
 	
-		
-	System.out.println("This is the bubble sort");
-	System.out.println("1000 numbers will be put into an array list and then be sorted");
-	int x=0;
-	
-	while(x!=10000){
-		
-		num.add(r.nextInt(1000)+1);
-		//num[x]=r.nextInt(1000)+1;
-		x++;
-		
-	}//end of 1000 array list
-	
-	x=0;
-	System.out.println("This is before the sort");
-	while(x!=num.size()){
-		
-		System.out.println(num.get(x));
-		x++;
-	}
-	
-	int k=0, count=0;
 	boolean exchangeMade=true;
 
 	while ((k<num.size()-1) && exchangeMade){
@@ -50,23 +29,12 @@ public class BubbleSort {
 			if(num.get(j)>num.get(j+1)){
 				swap(j, j+1);
 				exchangeMade=true;
-				count++;
 			}	
 		}//End of J for loop
 
 	}//End of Bubble sort while loop
 	
-	System.out.println("This is after the sort");
-	x=0;
-	
-	while(x!=num.size()){
-		
-		System.out.println(num.get(x));
-		x++;
-	}
-	System.out.println("It took "+count+" operations");
-	
-	}//End of Bubble
+	}//End of Bubble void
 
 }//End of Bubble Sort
 
