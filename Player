@@ -10,7 +10,7 @@ import javax.swing.ImageIcon;
 
 public class Player extends Entity{
 	
-	static boolean powerUp=true, hasPowerUp=false, ringo=false;
+	static boolean powerUp=true, hasPowerUp=false, ringo=false, shipVisable=true;
 	static int velX=0, velY=0, powerUpSpeed=0, powerUpX=0;
 	static int speed=2, pickPower=-1;
 	int lives=75;
@@ -33,6 +33,7 @@ public class Player extends Entity{
 	}
 	
 	public void draw(Graphics2D g2d){
+		if(shipVisable)
 		g2d.drawImage(getPlayerImg(),  x,  y,  null);
 		//draws player
 		//g2d.draw(getBounds());
@@ -81,7 +82,11 @@ public class Player extends Entity{
 				
 				case 4:
 					g2d.drawString("RINGO", 100, 25);
-					break;
+				break;
+				
+				case 5:
+					g2d.drawString("FUCK", 100, 25);
+				break;
 			}
 		}
 	}
@@ -232,7 +237,7 @@ public class Player extends Entity{
 	public void checkPower(){
 		if(getBounds().intersects(powerBounds())){
 			Random r = new Random();
-			pickPower=r.nextInt(5);
+			pickPower=r.nextInt(6);
 			
 			
 			switch (pickPower){
@@ -259,6 +264,10 @@ public class Player extends Entity{
 			
 			case 4:
 			ringo=true;
+			break;
+			
+			case 5:
+			shipVisable=false;
 			break;
 			
 			
