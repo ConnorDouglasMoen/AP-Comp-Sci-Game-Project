@@ -122,6 +122,7 @@ public class GameFrame extends JPanel implements ActionListener{
 			Player.powerUpSpeed=-5;
 			Player.hasPowerUp=false;
 			Player.ringo=false;
+			Player.shipVisable=true;
 			startGame();
 			//Checks to see if all enemies have gone off the screen increases level and displays message if true
 		}
