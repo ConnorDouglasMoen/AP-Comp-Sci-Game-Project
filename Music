@@ -1,0 +1,13 @@
+import java.applet.*;
+import java.net.*;
+public class Music {
+	public void music() {
+		     AudioClip clip;
+			try {
+				clip = Applet.newAudioClip(new URL("file:/C:/Users/limic000/Downloads/Brodyquest.wav"));
+				 clip.play();
+			} catch (MalformedURLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+}}
