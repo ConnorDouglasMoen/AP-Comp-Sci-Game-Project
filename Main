@@ -36,6 +36,13 @@ public class Main implements Runnable {
 			}
 		} ;
 		
+		//This is for the HighScore class... Not yet finalized
+		HighScore check = new HighScore();
+		check.check();
+		check.Bubble();
+		check.check();
+		check.UpdateFiles();
+		
 		score.start();
 		
 		JOptionPane.showMessageDialog(null, "Welcome \nhighscores\n1.Slavik lvl 20");
