@@ -1,9 +1,10 @@
 import java.awt.Color;
+import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
-public class Main implements Runnable {
+public class Main implements Runnable throws IOException {
 	
 	static int Score=0;
 	static JFrame frame = new JFrame("Cubeiga");
