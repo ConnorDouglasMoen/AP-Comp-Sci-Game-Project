@@ -1,131 +1,299 @@
-import java.awt.Graphics;
+import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Image;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.Rectangle;
+import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.Random;
-import java.awt.*;
 
 import javax.swing.ImageIcon;
-import javax.swing.JFrame;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.Timer;
 
-public class GameFrame extends JPanel implements ActionListener{
-
-	Timer mainTimer;
-	//timer so the game continues to update as you play
-	Player player;
-	static ArrayList<Enemy> enemies = new ArrayList<Enemy>();
-	//Array list for red enemies
-	static ArrayList<GreenEnemy> greenEnemies = new ArrayList<GreenEnemy>();
-	//Array list for green enemies
-	Random r = new Random();
-	int enemyCount=5, greenEnemyCount=2;
-	//Sets count for each of the enemies to start
-	static int level=1;
+public class Player extends Entity{
 	
-	public GameFrame(){
-		setFocusable(true);
-		mainTimer = new Timer(10, this);
-		mainTimer.start();
-		player = new Player(230, 530);
-		addKeyListener(new KeyAdapt(player));
-		//Starts timer and places player in starting location
-		
-		startGame();
+	static boolean powerUp=true, hasPowerUp=false, ringo=false;
+	static int velX=0, velY=0, powerUpSpeed=0, powerUpX=0;
+	static int speed=2, pickPower=-1;
+	int lives=75;
+		//sets the velocity and speed and lives to their starting values
+	public Player(int x, int y) {
+		super(x, y);
+		update();
+	}
+
+	public void update(){
+		y += velY;
+		x += velX;
+		powerUpSpeed += 2;
+		checkCollisions();
+		checkOffScreen();
+		if (powerUp){
+		checkPower();
+		}
+		//updates the location of the player based on what key you pressed
 	}
 	
-	public void paint(Graphics g) {
+	public void draw(Graphics2D g2d){
+		g2d.drawImage(getPlayerImg(),  x,  y,  null);
+		//draws player
+		//g2d.draw(getBounds());
+		if(powerUp){
+		g2d.setColor(Color.BLUE);
+		g2d.draw(powerBounds());
+		}
+		g2d.setColor(Color.BLACK);
+		g2d.drawString("Level "+GameFrame.level, 220, 25);
+		//Above draws the level on the top middle of the screen
+		if(lives>45){
+		g2d.setColor(Color.GREEN);
+		//Sets health bar color to green if it has high health
+		}
+		else if(lives>25){
+			g2d.setColor(Color.YELLOW);
+			//Sets health bar color to yellow if there is less than 45 health
+		}
+		else{
+			g2d.setColor(Color.red);
+			//sets health bar color to red if health is equal to 26
+		}
 		
-		super.paint(g);
-		Graphics2D g2d= (Graphics2D) g;
+		g2d.fillRect(400, 20, lives, 15);
+		//Draws the health bar with the correct color based on health left
+		g2d.setColor(Color.black);
+		g2d.drawString(String.valueOf(Main.Score), 15, 25);
+		if (hasPowerUp){
+			switch (pickPower){
+			
+				case 0:
+					g2d.drawString("SPEED UP", 100, 25);
+				break;
+				
+				case 1:
+					g2d.drawString("LIVES UP", 100, 25);
+				break;
+				
+				case 2:
+					g2d.drawString("LIVES DOWN", 100, 25);
+				break;
+				
+				case 3:
+					g2d.drawString("SPEED DOWN", 100, 25);
+				break;
+				
+				case 4:
+					g2d.drawString("RINGO", 100, 25);
+					break;
+			}
+		}
+	}
+	
+	public Image getPlayerImg(){
 		
-		player.draw(g2d);
-		//Draws player
+		ImageIcon ic = new ImageIcon("C:/GameImages/Ship2.png");
+		return ic.getImage();
+		//gets player image
+	}
+	
+	public void keyPressed(KeyEvent e){
+		int key=e.getKeyCode();
+		
+		if (!ringo){
+			if(key == KeyEvent.VK_UP){
+				velY=-speed;
+				//moves player up if up key is pressed
+			}
+		
+			else if(key == KeyEvent.VK_DOWN){
+				velY=speed;
+				//moves player down if down key is pressed
+			}
+		
+			else if(key == KeyEvent.VK_LEFT){
+				velX=-speed;
+				//moves player left if left key is pressed
+			}
+		
+			else if(key == KeyEvent.VK_RIGHT){
+				velX=speed;
+				//moves player right if right key is pressed
+			}
+		}
+		else if(ringo){
+			if(key == KeyEvent.VK_DOWN){
+				velY=-speed;
+				//moves player up if up key is pressed
+			}
+		
+			else if(key == KeyEvent.VK_UP){
+				velY=speed;
+				//moves player down if down key is pressed
+			}
+		
+			else if(key == KeyEvent.VK_RIGHT){
+				velX=-speed;
+				//moves player left if left key is pressed
+			}
+		
+			else if(key == KeyEvent.VK_LEFT){
+				velX=speed;
+				//moves player right if right key is pressed
+			}
+		}
+	}
+	
+	public void keyReleased(KeyEvent e){
+		int key=e.getKeyCode();
+		
+		//May need to add ringo if statement
+			if(key == KeyEvent.VK_UP){
+				velY=0;
+				//Stops player from moving when key is released
+			}
+
+			else if(key == KeyEvent.VK_LEFT){
+				velX=0;
+				//Stops player from moving when key is released
+			}
+
+			else if(key == KeyEvent.VK_DOWN){
+				velY=0;
+				//Stops player from moving when key is released
+			}
+
+			else if(key == KeyEvent.VK_RIGHT){
+				velX=0;
+				//Stops player from moving when key is released
+			}
+		
+	
+		
+	}//End of keyReleased
+	
+	public void checkCollisions(){
+		ArrayList<Enemy> enemies = GameFrame.getEnemyList();
 		for (int i=0; i<enemies.size(); i++){
 			Enemy tempEnemy = enemies.get(i);
-			tempEnemy.draw(g2d);
-			//Adds red square enemies
+			if (getBounds().intersects(enemies.get(i).getBounds())){
+					lives--;
+					//Takes away health if you run into an enemy
+					if(lives==0){
+						System.out.println("You made it to level "+GameFrame.level);
+						System.out.println("GAME OVER");
+						System.exit(0);
+						//Runs if you run out of health
+					}
+			}
+			
 		}
+		ArrayList<GreenEnemy> greenEnemies = GameFrame.getGreenEnemyList();
 		for (int i=0; i<greenEnemies.size(); i++){
 			Enemy tempGreenEnemy = greenEnemies.get(i);
-			tempGreenEnemy.draw(g2d);
-			//Adds green square enemies
+			if (getBounds().intersects(greenEnemies.get(i).getBounds())){
+					lives--;
+					//Takes away health if you run into an enemy
+					if(lives==0){
+						System.out.println("You made it to level "+GameFrame.level);
+						System.out.println("GAME OVER");
+						System.exit(0);
+						//Runs if you run out of health
+					}
+			}
+			
 		}
-
-		Enemy e = new Enemy(enemyCount, enemyCount);
-		GreenEnemy Ge = new GreenEnemy(greenEnemyCount, greenEnemyCount);
-		//g2d.draw(e.getBounderies());
-		//Draws bottom boundary so enemies are deleted as the go off screen
-	}
-
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		player.update();
-		for (int i=0; i< enemies.size(); i++){
-			Enemy tempEnemy = enemies.get(i);
-			tempEnemy.update();
-			//updates the location of the enemies is the array list
+		
+	}//End of check Collisions
+	
+	public void checkOffScreen(){
+		if(getBounds().intersects(offRight())){
+			velX=-2;
+			//Stops you from going of to the right
+			/*lives--;
+			if(lives==0){
+				System.out.println("You made it to level "+GameFrame.level);
+				System.out.println("GAME OVER");
+				System.exit(0);
+			}*/
+			
 		}
-		for (int i=0; i< greenEnemies.size(); i++){
-			Enemy tempGreenEnemy = greenEnemies.get(i);
-			tempGreenEnemy.update();
-			//updates the location of the enemies is the array list
+		else if (getBounds().intersects(offLeft())){
+			velX=2;
+			//stops you from going of the screen to the left
+			/*lives--;
+			if(lives==0){
+				System.out.println("You made it to level "+GameFrame.level);
+				System.out.println("GAME OVER");
+				System.exit(0);
+			}*/
 		}
-		checkEnd();
-		repaint();
-	}
-	
-	public void addEnemy(Enemy e){
-		//adds a red enemy to the array list
-		enemies.add(e);
-	}
-	
-	public void addGreenEnemy(GreenEnemy Ge){
-		//adds green enemy to the array list
-		greenEnemies.add(Ge);
-	}
-	
-	public static ArrayList<Enemy> getEnemyList(){
-		//adds a green enemy to its array list
-		return enemies;
-	}
-	
-	public static ArrayList<GreenEnemy> getGreenEnemyList(){
-		return greenEnemies;
-	}
-	
-	public void startGame(){
-		enemyCount=level*5;
-		for (int i=0; i<enemyCount; i++){
-			addEnemy(new Enemy(r.nextInt(475), -10 + -r.nextInt(600+level*25)));
+		else if(getBounds().intersects(offBottom())){
+			velY=-2;
+			//stops you from going off the bottom of the screen
 		}
-		for (int i=0; i<greenEnemyCount; i++){
-			addGreenEnemy(new GreenEnemy(r.nextInt(475), -10 + -r.nextInt(600+level*25)-800));
-		}
-		Player.powerUpX=r.nextInt(475);
-		//Starts the game sets the enemy count and randomly places the enemies
-	}//End of start game
+		
+	}
 	
-	public void checkEnd(){
-		if (enemies.size() ==0){
+	public void checkPower(){
+		if(getBounds().intersects(powerBounds())){
 			Random r = new Random();
-			level++;
-			greenEnemyCount+=2;
-			enemies.clear();
-			Player.speed=2;
-			//JOptionPane.showMessageDialog(null, "On to level "+level);
-			Player.powerUp=true;
-			Player.powerUpSpeed=-5;
-			Player.hasPowerUp=false;
-			Player.ringo=false;
-			startGame();
-			//Checks to see if all enemies have gone off the screen increases level and displays message if true
+			pickPower=r.nextInt(5);
+			
+			switch (pickPower){
+			
+			case 0:
+			speed=5;
+			break;
+			
+			case 1:
+			lives=75;
+			break;
+			
+			case 2:
+			lives=lives-25;
+			break;
+			
+			case 3:
+			speed=1;
+			break;
+			
+			case 4:
+			ringo=true;
+			break;
+			
+			
+			}//End of switch statement
+			powerUp=false;
+			hasPowerUp=true;
+			
 		}
 		
 		
-	}//End of check end
+	}//end of check power
+	
+	public Rectangle getBounds(){
+		//return new Rectangle(x, y, getPlayerImg().getWidth(null), getPlayerImg().getHeight(null));
+		//Gives boundaries of player
+		return new Rectangle(x, y, 25, 25);
+		
+	}
+	
+	public Rectangle offRight(){
+		return new Rectangle(490, -5, 200, 600);
+		//Gets boundaries of right side of the screen
+	}
+	
+	public Rectangle offLeft(){
+		return new Rectangle(-200, -5, 195, 600);
+		//Gets boundaries of left side of the screen
+	}
+	
+	public Rectangle offBottom(){
+		return new Rectangle(-5, 575, 600, 200);
+		//Gets boundaries of the bottom of the screen
+	}
+
+	public Rectangle powerBounds(){
+		
+		return new Rectangle (powerUpX, powerUpSpeed, 25, 25);
+	}
+
 }
+
