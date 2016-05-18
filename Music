@@ -5,7 +5,7 @@ public class Music {
 		     AudioClip clip;
 			try {
 				clip = Applet.newAudioClip(new URL("file:/C:/Users/limic000/Downloads/Brodyquest.wav"));
-				 clip.play();
+				clip.loop();
 			} catch (MalformedURLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
