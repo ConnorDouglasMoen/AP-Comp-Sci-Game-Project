@@ -1,0 +1,80 @@
+import java.io.*;
+import java.util.ArrayList;
+import java.util.Random;
+import java.util.Scanner;
+
+public class HighScore {
+	
+	ArrayList<Integer> HighScores = new ArrayList<Integer>();
+	ArrayList<String> Names = new ArrayList<String>();
+	
+	Random r = new Random();
+	
+	public HighScore () throws IOException {
+		Scanner FileScanNum = new Scanner(new File("HighScoreNums.txt"));
+		//Fills the scores array list with the stored highscores.
+		while (FileScanNum.hasNext()) {
+			HighScores.add(FileScanNum.nextInt());
+		}
+		FileScanNum.close();
+		
+		Scanner FileScanName = new Scanner(new File("HighScoreNames.txt"));
+		//Fills the names array list with the names, parallel to the scores array list.
+		while (FileScanName.hasNext()) {
+			Names.add(FileScanName.nextLine());
+		}
+		FileScanName.close();
+	}
+	
+	public void swap(int x, int y) {
+		int temp = HighScores.get(x);
+		String temp2 = Names.get(x);
+		HighScores.set(x, HighScores.get(y));
+		Names.set(x, Names.get(y));
+		HighScores.set(y, temp);
+		Names.set(y, temp2);
+		//Will be called by bubble
+		
+	}//End of Swap
+	
+	public void Bubble() {
+		int x=0, k=0;
+		boolean exchangeMade=true;
+		while ((k < HighScores.size() - 1) && exchangeMade) {
+			exchangeMade = false;	
+			k++;
+			for (int j = 0; j < HighScores.size() - k; j++) {
+				if(HighScores.get(j) > HighScores.get(j + 1)) {
+					swap(j, j + 1);
+					exchangeMade = true;
+				}	
+			}//End of J for loop
+
+		}//End of Bubble sort while loop
+	
+	}//End of Bubble void
+	
+	public void check() {
+		for (int i = 0; i < HighScores.size(); i ++) {
+			System.out.print(HighScores.get(i) + " ");
+			System.out.println(Names.get(i));
+		}
+	}
+	
+	//UpdateFiles Method: This method will update the HighScore Nums and Names file with an updated, sorted list.
+	public void UpdateFiles() throws IOException {
+		//Returns the array list with highscore values to the document that stores them.
+		PrintWriter printnums = new PrintWriter(new File("HighScoreNums.txt"));
+		
+		//Returns the array list with the names of highscore holders to the names document.
+		PrintWriter printnames = new PrintWriter(new File("HighScoreNames.txt"));
+		for (int i = 0; i < HighScores.size(); i++ ) {
+			printnums.println(HighScores.get(i));
+			printnames.println(Names.get(i));
+		}
+		printnums.close();
+		printnames.close();
+		
+	}
+
+}
