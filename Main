@@ -37,16 +37,17 @@ public class Main implements Runnable throws IOException {
 			}
 		} ;
 		
-		//This is for the HighScore class... Not yet finalized
+		//This sorts the highscores from the previous games.
 		HighScore check = new HighScore();
-		check.check();
 		check.Bubble();
-		check.check();
-		check.UpdateFiles();
-		
 		score.start();
 		
-		JOptionPane.showMessageDialog(null, "Welcome \nhighscores\n1.Slavik lvl 20");
+		JOptionPane.showMessageDialog(null, "Welcome to Cubeiga! \nHighscores"
+									+ "\n1. " + check.Names.get(check.Names.size()-1) + " " + check.HighScores.get(check.HighScores.size()-1)
+									+ "\n2. " + check.Names.get(check.Names.size()-2) + " " + check.HighScores.get(check.HighScores.size()-2)
+									+ "\n3. " + check.Names.get(check.Names.size()-3) + " " + check.HighScores.get(check.HighScores.size()-3)
+									+ "\n4. " + check.Names.get(check.Names.size()-4) + " " + check.HighScores.get(check.HighScores.size()-4)
+									+ "\n5. " + check.Names.get(check.Names.size()-5) + " " + check.HighScores.get(check.HighScores.size()-5));
 		frame.setSize(500, 600);
 		//Above sets the size of the game frame
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
