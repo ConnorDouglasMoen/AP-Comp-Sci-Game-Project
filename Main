@@ -4,13 +4,13 @@ import java.util.concurrent.TimeUnit;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
-public class Main implements Runnable throws IOException {
+public class Main implements Runnable {
 	
 	static int Score=0;
 	static JFrame frame = new JFrame("Cubeiga");
 	//Sets name of window name not finalized
 	
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException {
 		
 		JFrame frame2 = new JFrame("Info");
 		//Not being used right now may be used later for scoring information
@@ -53,6 +53,7 @@ public class Main implements Runnable throws IOException {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.add(new GameFrame());
 		frame.setVisible(true);
+		
 		//frame2.setSize(200, 200);
 		//frame2.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		//frame2.setVisible(true);
