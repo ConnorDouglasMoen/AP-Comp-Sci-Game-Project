@@ -133,6 +133,13 @@ public class GameFrame extends JPanel implements ActionListener{
 	public void gameOver(){
 		System.out.println("You made it to level "+GameFrame.level);
 		System.out.println("GAME OVER");
+		
+		//Add a new highscore if needed
+		HighScore hs = new HighScore();
+		hs.addScore(Main.Score);
+		hs.Bubble();
+		hs.UpdateFiles();
+		
 		System.exit(0);
 		//Runs if you run out of health
 	}
