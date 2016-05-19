@@ -68,13 +68,25 @@ public class HighScore {
 		
 		//Returns the array list with the names of highscore holders to the names document.
 		PrintWriter printnames = new PrintWriter(new File("HighScoreNames.txt"));
-		for (int i = 0; i < HighScores.size(); i++ ) {
+		for (int i = HighScores.size() - 1; i > HighScores.size() - 6; i-- ) {
 			printnums.println(HighScores.get(i));
 			printnames.println(Names.get(i));
 		}
 		printnums.close();
 		printnames.close();
 		
+	}
+	
+	public void addScore(int Score) {
+		Scanner reader = new Scanner(System.in);
+		
+		for (int i = 0; i < HighScores.size(); i ++) {
+			if (Score > HighScores.get(i)) {
+				HighScores.add(Score);
+				System.out.println("Congratulations! You're in the top five highscores! Please enter your name.");
+				Names.add(reader.nextLine());
+			}
+		}
 	}
 
 }
