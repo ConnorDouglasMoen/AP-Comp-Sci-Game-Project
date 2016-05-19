@@ -18,6 +18,7 @@ public class GameFrame extends JPanel implements ActionListener{
 	Timer mainTimer;
 	//timer so the game continues to update as you play
 	Player player;
+	Player2 player2;
 	static ArrayList<Enemy> enemies = new ArrayList<Enemy>();
 	//Array list for red enemies
 	static ArrayList<GreenEnemy> greenEnemies = new ArrayList<GreenEnemy>();
@@ -32,6 +33,8 @@ public class GameFrame extends JPanel implements ActionListener{
 		mainTimer = new Timer(10, this);
 		mainTimer.start();
 		player = new Player(230, 530);
+		player2 = new Player2(200, 530);
+		addKeyListener(new KeyAdapt(player2));
 		addKeyListener(new KeyAdapt(player));
 		//Starts timer and places player in starting location
 		
@@ -44,6 +47,7 @@ public class GameFrame extends JPanel implements ActionListener{
 		Graphics2D g2d= (Graphics2D) g;
 		
 		player.draw(g2d);
+		player2.draw(g2d);
 		//Draws player
 		for (int i=0; i<enemies.size(); i++){
 			Enemy tempEnemy = enemies.get(i);
@@ -65,6 +69,7 @@ public class GameFrame extends JPanel implements ActionListener{
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		player.update();
+		player2.update();
 		for (int i=0; i< enemies.size(); i++){
 			Enemy tempEnemy = enemies.get(i);
 			tempEnemy.update();
@@ -116,13 +121,8 @@ public class GameFrame extends JPanel implements ActionListener{
 			level++;
 			greenEnemyCount+=2;
 			enemies.clear();
-			Player.speed=2;
+			resetGame();
 			//JOptionPane.showMessageDialog(null, "On to level "+level);
-			Player.powerUp=true;
-			Player.powerUpSpeed=-5;
-			Player.hasPowerUp=false;
-			Player.ringo=false;
-			Player.shipVisable=true;
 			startGame();
 			//Checks to see if all enemies have gone off the screen increases level and displays message if true
 		}
@@ -133,14 +133,30 @@ public class GameFrame extends JPanel implements ActionListener{
 	public void gameOver(){
 		System.out.println("You made it to level "+GameFrame.level);
 		System.out.println("GAME OVER");
-		
 		//Add a new highscore if needed
-		HighScore hs = new HighScore();
-		hs.addScore(Main.Score);
-		hs.Bubble();
-		hs.UpdateFiles();
-		
+				HighScore hs = new HighScore();
+				hs.addScore(Main.Score);
+				hs.Bubble();
+				hs.UpdateFiles();
 		System.exit(0);
 		//Runs if you run out of health
+	}
+	
+	public void resetGame(){
+		
+		Player.speed=2;
+		Player.powerUp=true;
+		Player.powerUpSpeed=-5;
+		Player.hasPowerUp=false;
+		Player.ringo=false;
+		Player.shipVisable=true;
+		Enemy.speed=2;
+		GreenEnemy.speed=5;
+		Player2.speed=2;
+		Player2.powerUp=true;
+		Player2.powerUpSpeed=-5;
+		Player2.hasPowerUp=false;
+		Player2.ringo=false;
+		Player2.shipVisable=true;
 	}
 }
