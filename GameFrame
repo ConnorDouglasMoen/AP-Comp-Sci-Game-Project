@@ -34,8 +34,10 @@ public class GameFrame extends JPanel implements ActionListener{
 		mainTimer = new Timer(10, this);
 		mainTimer.start();
 		player = new Player(230, 530);
-		//player2 = new Player2(200, 530);
-		//addKeyListener(new KeyAdapt(player2));
+		if(Main.twoplayer)
+		player2 = new Player2(200, 530);
+		if(Main.twoplayer)
+		addKeyListener(new KeyAdapt(player2));
 		addKeyListener(new KeyAdapt(player));
 		//Starts timer and places player in starting location
 		
@@ -48,7 +50,8 @@ public class GameFrame extends JPanel implements ActionListener{
 		Graphics2D g2d= (Graphics2D) g;
 		
 		player.draw(g2d);
-		//player2.draw(g2d);
+		if(Main.twoplayer)
+		player2.draw(g2d);
 		//Draws player
 		for (int i=0; i<enemies.size(); i++){
 			Enemy tempEnemy = enemies.get(i);
@@ -70,7 +73,8 @@ public class GameFrame extends JPanel implements ActionListener{
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		player.update();
-		//player2.update();
+		if(Main.twoplayer)
+		player2.update();
 		for (int i=0; i< enemies.size(); i++){
 			Enemy tempEnemy = enemies.get(i);
 			tempEnemy.update();
@@ -133,6 +137,14 @@ public class GameFrame extends JPanel implements ActionListener{
 	
 	public void gameOver() throws IOException{
 		System.out.println("You made it to level "+GameFrame.level);
+		if(Player.lives==0){
+			System.out.println("Player 1 died");
+			System.out.println("Player 2 WINS!");
+		}
+		else if(Player2.lives==0){
+			System.out.println("Player 2 died");
+			System.out.println("Player 1 WINS!");
+		}
 		System.out.println("GAME OVER");
 		//Add a new highscore if needed
 				HighScore hs = new HighScore();
@@ -153,11 +165,13 @@ public class GameFrame extends JPanel implements ActionListener{
 		Player.shipVisable=true;
 		Enemy.speed=2;
 		GreenEnemy.speed=5;
-		//Player2.speed=2;
-		//Player2.powerUp=true;
-		//Player2.powerUpSpeed=-5;
-		//Player2.hasPowerUp=false;
-		//Player2.ringo=false;
-		//Player2.shipVisable=true;
+		if(Main.twoplayer){
+		Player2.speed=2;
+		Player2.powerUp=true;
+		Player2.powerUpSpeed=-5;
+		Player2.hasPowerUp=false;
+		Player2.ringo=false;
+		Player2.shipVisable=true;
+		}
 	}
 }
