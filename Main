@@ -40,7 +40,6 @@ public class Main implements Runnable {
 		//This sorts the highscores from the previous games.
 		HighScore check = new HighScore();
 		check.Bubble();
-		score.start();
 		
 		JOptionPane.showMessageDialog(null, "Welcome to Cubeiga! \nHighscores"
 									+ "\n1. " + check.Names.get(check.Names.size()-1) + " " + check.HighScores.get(check.HighScores.size()-1)
@@ -51,6 +50,7 @@ public class Main implements Runnable {
 		frame.setSize(500, 600);
 		//Above sets the size of the game frame
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		score.start();
 		frame.add(new GameFrame());
 		frame.setVisible(true);
 		
