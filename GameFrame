@@ -34,7 +34,7 @@ public class GameFrame extends JPanel implements ActionListener{
 		mainTimer.start();
 		player = new Player(230, 530);
 		//player2 = new Player2(200, 530);
-		addKeyListener(new KeyAdapt(player2));
+		//addKeyListener(new KeyAdapt(player2));
 		addKeyListener(new KeyAdapt(player));
 		//Starts timer and places player in starting location
 		
