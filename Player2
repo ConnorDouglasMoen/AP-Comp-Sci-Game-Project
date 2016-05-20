@@ -94,7 +94,7 @@ public class Player2 extends Player{
 		static boolean powerUp=true, hasPowerUp=false, ringo=false, shipVisable=true;
 		static int velX=0, velY=0, powerUpSpeed=0, powerUpX=0;
 		static int speed=2, pickPower=-1;
-		int lives=75;
+		static int lives=75;
 			//sets the velocity and speed and lives to their starting values
 		
 		public void update(){
@@ -113,14 +113,17 @@ public class Player2 extends Player{
 			if(shipVisable)
 			g2d.drawImage(getPlayerImg(),  x,  y,  null);
 			//draws player
-			g2d.setColor(Color.green);
-			g2d.draw(getBounds());
+			//g2d.setColor(Color.green);
+			//if(shipVisable)
+			//g2d.draw(getBounds());
 			g2d.setColor(Color.BLACK);
 			if(powerUp){
 			g2d.setColor(Color.BLUE);
 			g2d.draw(powerBounds());
 			}
 			g2d.setColor(Color.BLACK);
+			g2d.drawString("Player 2", 345, 57);
+			g2d.drawRect(399, 44, 76, 16);
 			g2d.drawString("Level "+GameFrame.level, 220, 25);
 			//Above draws the level on the top middle of the screen
 			if(lives>45){
@@ -135,8 +138,8 @@ public class Player2 extends Player{
 				g2d.setColor(Color.red);
 				//sets health bar color to red if health is equal to 26
 			}
-			g2d.drawString("Player 2", 360, 25);
-			g2d.fillRect(400, 25, lives, 30);
+			
+			g2d.fillRect(400, 45, lives, 15);
 			//Draws the health bar with the correct color based on health left
 			g2d.setColor(Color.black);
 			g2d.drawString(String.valueOf(Main.Score), 15, 25);
@@ -151,31 +154,31 @@ public class Player2 extends Player{
 				switch (pickPower){
 				
 					case 0:
-						g2d.drawString("SPEED UP", 100, 25);
+						g2d.drawString("SPEED UP", 100, 45);
 					break;
 					
 					case 1:
-						g2d.drawString("LIVES UP", 100, 25);
+						g2d.drawString("LIVES UP", 100, 45);
 					break;
 					
 					case 2:
-						g2d.drawString("LIVES DOWN", 100, 25);
+						g2d.drawString("LIVES DOWN", 100, 45);
 					break;
 					
 					case 3:
-						g2d.drawString("SPEED DOWN", 100, 25);
+						g2d.drawString("SPEED DOWN", 100, 45);
 					break;
 					
 					case 4:
-						g2d.drawString("RINGO", 100, 25);
+						g2d.drawString("RINGO", 100, 45);
 					break;
 					
 					case 5:
-						g2d.drawString("FUCK", 100, 25);
+						g2d.drawString("FUCK", 100, 45);
 					break;
 					
 					case 6:
-						g2d.drawString("ENEMIES SLOW", 100, 25);
+						g2d.drawString("ENEMIES SLOW", 100, 45);
 					break;
 				}
 			}
@@ -279,7 +282,7 @@ public class Player2 extends Player{
 			if(getBounds().intersects(powerBounds())){
 				Random r = new Random();
 				pickPower=r.nextInt(7);
-				//pickPower=0;
+				//pickPower=5;
 				
 				switch (pickPower){
 				
