@@ -3,6 +3,7 @@ import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Random;
 import java.awt.*;
@@ -18,7 +19,7 @@ public class GameFrame extends JPanel implements ActionListener{
 	Timer mainTimer;
 	//timer so the game continues to update as you play
 	Player player;
-	//Player2 player2;
+	Player2 player2;
 	static ArrayList<Enemy> enemies = new ArrayList<Enemy>();
 	//Array list for red enemies
 	static ArrayList<GreenEnemy> greenEnemies = new ArrayList<GreenEnemy>();
@@ -130,7 +131,7 @@ public class GameFrame extends JPanel implements ActionListener{
 		
 	}//End of check end
 	
-	public void gameOver(){
+	public void gameOver() throws IOException{
 		System.out.println("You made it to level "+GameFrame.level);
 		System.out.println("GAME OVER");
 		//Add a new highscore if needed
@@ -152,11 +153,11 @@ public class GameFrame extends JPanel implements ActionListener{
 		Player.shipVisable=true;
 		Enemy.speed=2;
 		GreenEnemy.speed=5;
-		Player2.speed=2;
-		Player2.powerUp=true;
-		Player2.powerUpSpeed=-5;
-		Player2.hasPowerUp=false;
-		Player2.ringo=false;
-		Player2.shipVisable=true;
+		//Player2.speed=2;
+		//Player2.powerUp=true;
+		//Player2.powerUpSpeed=-5;
+		//Player2.hasPowerUp=false;
+		//Player2.ringo=false;
+		//Player2.shipVisable=true;
 	}
 }
