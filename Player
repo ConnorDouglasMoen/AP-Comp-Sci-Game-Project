@@ -9,20 +9,19 @@ import java.util.Random;
 
 import javax.swing.ImageIcon;
 
-public class Player {
+public class Player extends Entity{
 	
-	static boolean powerUp=true, hasPowerUp=false, ringo=false;
-	static int velX=0, velY=0, powerUpSpeed=0, powerUpX=0, x, y;
+	static boolean powerUp=true, hasPowerUp=false, ringo=false, shipVisable=true;
+	static int velX=0, velY=0, powerUpSpeed=0, powerUpX=0;
 	static int speed=2, pickPower=-1;
-	int lives=75;
+	static int lives=75;
 		//sets the velocity and speed and lives to their starting values
 	public Player(int x, int y) {
-		this.x = x;
-		this.y = y;
+		super(x, y);
 		update();
 	}
 
-	public void update() {
+	public void update(){
 		y += velY;
 		x += velX;
 		powerUpSpeed += 2;
@@ -35,14 +34,16 @@ public class Player {
 	}
 	
 	public void draw(Graphics2D g2d){
+		if(shipVisable)
 		g2d.drawImage(getPlayerImg(),  x,  y,  null);
 		//draws player
 		//g2d.draw(getBounds());
 		if(powerUp){
-		g2d.setColor(Color.BLUE);
+		g2d.setColor(Color.RED);
 		g2d.draw(powerBounds());
 		}
 		g2d.setColor(Color.BLACK);
+		g2d.drawString("Player 1", 345, 35);
 		g2d.drawString("Level "+GameFrame.level, 220, 25);
 		//Above draws the level on the top middle of the screen
 		if(lives>45){
@@ -62,6 +63,13 @@ public class Player {
 		//Draws the health bar with the correct color based on health left
 		g2d.setColor(Color.black);
 		g2d.drawString(String.valueOf(Main.Score), 15, 25);
+		g2d.draw(offRight());
+		g2d.draw(offBottom());
+		g2d.draw(offLeft());
+		g2d.setColor(Color.red);
+		g2d.draw(DEATHRIGHT());
+		g2d.draw(DEATHLEFT());
+		g2d.setColor(Color.black);
 		if (hasPowerUp){
 			switch (pickPower){
 			
@@ -83,14 +91,22 @@ public class Player {
 				
 				case 4:
 					g2d.drawString("RINGO", 100, 25);
-					break;
+				break;
+				
+				case 5:
+					g2d.drawString("FUCK", 100, 25);
+				break;
+				
+				case 6:
+					g2d.drawString("ENEMIES SLOW", 100, 25);
+				break;
 			}
 		}
 	}
 	
 	public Image getPlayerImg(){
 		
-		ImageIcon ic = new ImageIcon("GameImages/Ship2.png");
+		ImageIcon ic = new ImageIcon("C:/GameImages/Ship.png");
 		return ic.getImage();
 		//gets player image
 	}
@@ -145,7 +161,7 @@ public class Player {
 	public void keyReleased(KeyEvent e){
 		int key=e.getKeyCode();
 		
-		//May need to add ringo if statement
+		
 			if(key == KeyEvent.VK_UP){
 				velY=0;
 				//Stops player from moving when key is released
@@ -209,7 +225,7 @@ public class Player {
 	
 	public void checkOffScreen(){
 		if(getBounds().intersects(offRight())){
-			velX=-2;
+			velX=-speed;
 			//Stops you from going of to the right
 			/*lives--;
 			if(lives==0){
@@ -220,7 +236,7 @@ public class Player {
 			
 		}
 		else if (getBounds().intersects(offLeft())){
-			velX=2;
+			velX=speed;
 			//stops you from going of the screen to the left
 			/*lives--;
 			if(lives==0){
@@ -230,17 +246,37 @@ public class Player {
 			}*/
 		}
 		else if(getBounds().intersects(offBottom())){
-			velY=-2;
+			velY=-speed;
 			//stops you from going off the bottom of the screen
+		}
+		else if(getBounds().intersects(DEATHRIGHT())){
+			System.out.println("You are a cheater");
+			GameFrame GF = new GameFrame();
+			try {
+				GF.gameOver();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		else if(getBounds().intersects(DEATHLEFT())){
+			System.out.println("You are a cheater");
+			GameFrame GF = new GameFrame();
+			try {
+				GF.gameOver();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 		
 	}
 	
-	public void checkPower() {
+	public void checkPower(){
 		if(getBounds().intersects(powerBounds())){
 			Random r = new Random();
-			pickPower=r.nextInt(5);
-			
+			pickPower=r.nextInt(7);
+			//pickPower=0;
 			
 			switch (pickPower){
 			
@@ -271,6 +307,15 @@ public class Player {
 			
 			case 4:
 			ringo=true;
+			break;
+			
+			case 5:
+			shipVisable=false;
+			break;
+			
+			case 6:
+			Enemy.speed=1;
+			GreenEnemy.speed=3;
 			break;
 			
 			
@@ -309,6 +354,13 @@ public class Player {
 		
 		return new Rectangle (powerUpX, powerUpSpeed, 25, 25);
 	}
-
+	
+	public Rectangle DEATHRIGHT(){
+		return new Rectangle(520, -500, 600, 1500);
+	}
+	
+	public Rectangle DEATHLEFT(){
+		return new Rectangle(-200, -500, 185, 1500);
+	}
 }
 
