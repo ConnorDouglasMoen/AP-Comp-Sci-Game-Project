@@ -12,7 +12,7 @@ import javax.swing.ImageIcon;
 public class Player extends Entity{
 	
 	static boolean powerUp=true, hasPowerUp=false, ringo=false, shipVisable=true;
-	static int velX=0, velY=0, powerUpSpeed=0, powerUpX=0;
+	static int velX=0, velY=0, powerUpSpeed=0, powerUpX=0, rScore=0;
 	static int speed=2, pickPower=-1;
 	static int lives=75;
 		//sets the velocity and speed and lives to their starting values
@@ -41,9 +41,13 @@ public class Player extends Entity{
 		if(powerUp){
 		g2d.setColor(Color.RED);
 		g2d.draw(powerBounds());
+		if(!Main.twoplayer)
+			g2d.drawString(String.valueOf(rScore), powerUpX, powerUpSpeed);
+			//TODO change so that that correct score prints out with power up block
 		}
-		g2d.setColor(Color.BLACK);
+		g2d.setColor(Color.RED);
 		g2d.drawString("Player 1", 345, 35);
+		g2d.setColor(Color.black);
 		g2d.drawString("Level "+GameFrame.level, 220, 25);
 		//Above draws the level on the top middle of the screen
 		if(lives>45){
@@ -62,7 +66,6 @@ public class Player extends Entity{
 		g2d.fillRect(400, 20, lives, 15);
 		//Draws the health bar with the correct color based on health left
 		g2d.setColor(Color.black);
-		if (!Main.twoplayer)
 		g2d.drawString(String.valueOf(Main.Score), 15, 25);
 		g2d.draw(offRight());
 		g2d.draw(offBottom());
@@ -321,10 +324,13 @@ public class Player extends Entity{
 			
 			
 			}//End of switch statement
+			
+			rScore=r.nextInt(400)+100;
+			Main.Score=Main.Score+rScore;
 			powerUp=false;
 			hasPowerUp=true;
 			
-		}
+		}//End of power up intersect if statment
 		
 		
 	}//end of check power
