@@ -1,5 +1,6 @@
 import java.awt.Color;
 import java.io.IOException;
+import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -7,10 +8,12 @@ import javax.swing.JOptionPane;
 public class Main implements Runnable {
 	
 	static int Score=0;
+	static boolean twoplayer;
 	static JFrame frame = new JFrame("Cubeiga");
 	//Sets name of window name not finalized
 	
 	public static void main(String[] args) throws IOException {
+		Scanner reader = new Scanner(System.in);
 		
 		JFrame frame2 = new JFrame("Info");
 		//Not being used right now may be used later for scoring information
@@ -40,6 +43,21 @@ public class Main implements Runnable {
 		//This sorts the highscores from the previous games.
 		HighScore check = new HighScore();
 		check.Bubble();
+		
+		//Determine if the user would like to play a one-player game or a two-player game.
+		System.out.println("Please select a gameplay mode:");
+		System.out.println("\t- 1: Single Player --> One Player uses the arrow keys to avoid the enemies and chase a high score.");
+		System.out.println("\t- 2: Double Player --> Player One uses the arrow keys, and Player Two uses WASD in a battle of survival.");
+		int num = reader.nextInt();
+		while (num != 1 && num != 2) {
+			System.out.println("Sorry, that is not an option. Please enter either a 1 or 2.");
+			num = reader.nextInt();
+		}
+		if (num == 1) {
+			twoplayer = false;
+		} else {
+			twoplayer = true;
+		}
 		
 		JOptionPane.showMessageDialog(null, "Welcome to Cubeiga! \nHighscores"
 									+ "\n1. " + check.Names.get(check.Names.size()-1) + " " + check.HighScores.get(check.HighScores.size()-1)
