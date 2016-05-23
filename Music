@@ -2,7 +2,7 @@ import java.applet.*;
 import java.net.*;
 import java.io.File;
 public class Music {
-	public void music() {
+	public static void music() {
 		     AudioClip clip;
 			try {
 				clip = Applet.newAudioClip(new File("Brodyquest.wav").toURL()); //Put the file into your project's folder.
