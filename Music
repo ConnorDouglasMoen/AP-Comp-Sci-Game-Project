@@ -1,10 +1,11 @@
 import java.applet.*;
 import java.net.*;
+import java.io.File;
 public class Music {
 	public void music() {
 		     AudioClip clip;
 			try {
-				clip = Applet.newAudioClip(new URL("file:/C:/Users/limic000/Downloads/Brodyquest.wav"));
+				clip = Applet.newAudioClip(new File("Brodyquest.wav").toURL()); //Put the file into your project's folder.
 				clip.loop();
 			} catch (MalformedURLException e) {
 				// TODO Auto-generated catch block
