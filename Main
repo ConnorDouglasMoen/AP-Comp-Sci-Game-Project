@@ -68,6 +68,7 @@ public class Main implements Runnable {
 		frame.setSize(500, 600);
 		//Above sets the size of the game frame
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		Music.music();
 		score.start();
 		frame.add(new GameFrame());
 		frame.setVisible(true);
