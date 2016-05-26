@@ -8,7 +8,7 @@ import javax.swing.ImageIcon;
 
 public class Enemy extends Entity{
 	
-	int velX=0, velY=0, speed=2;
+	static int velX=0, velY=0, speed=2;
 	//Sets the velocity and speed of the red enemy
 
 	public Enemy(int x, int y) {
@@ -17,7 +17,7 @@ public class Enemy extends Entity{
 	}
 	
 	public void update(){
-		y+=2;
+		y+=speed;
 		checkOffScreen();
 		//updates the y coordinate of the red enemy 
 	}
@@ -34,7 +34,7 @@ public class Enemy extends Entity{
 	
 	public Image getEnemyImg(){
 		
-		ImageIcon ic = new ImageIcon("C:/GameImages/square.png");
+		ImageIcon ic = new ImageIcon("P:/GameImages/square.png");
 		return ic.getImage();
 		//pulls image from c drive of computer
 	}
