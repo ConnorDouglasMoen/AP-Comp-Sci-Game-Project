@@ -136,8 +136,8 @@ public class GameFrame extends JPanel implements ActionListener{
 	}//End of check end
 	
 	public void gameOver() throws IOException{
-		if (Main.twoplayer) { //if two player
 		System.out.println("You made it to level "+GameFrame.level);
+		if(Main.twoplayer){
 		if(Player.lives==0){
 			System.out.println("Player 1 died");
 			System.out.println("Player 2 WINS!");
@@ -146,16 +146,13 @@ public class GameFrame extends JPanel implements ActionListener{
 			System.out.println("Player 2 died");
 			System.out.println("Player 1 WINS!");
 		}
+		}
 		System.out.println("GAME OVER");
-		} else { //If one player
-			System.out.println("GAME OVER");
-			System.out.println("You made it to level "+GameFrame.level);
 		//Add a new highscore if needed
 				HighScore hs = new HighScore();
 				hs.addScore(Main.Score);
 				hs.Bubble();
 				hs.UpdateFiles();
-		}
 		System.exit(0);
 		//Runs if you run out of health
 	}
