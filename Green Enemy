@@ -8,7 +8,7 @@ import javax.swing.ImageIcon;
 
 public class GreenEnemy extends Enemy{
 
-int velX=0, velY=0, speed=5;
+	static int velX=0, velY=0, speed=5;
 	
 
 	public GreenEnemy(int x, int y) {
@@ -30,7 +30,7 @@ int velX=0, velY=0, speed=5;
 	
 	public Image getEnemyImg(){
 		
-		ImageIcon ic = new ImageIcon("C:/GameImages/GreenSquare.png");
+		ImageIcon ic = new ImageIcon("P:/GameImages/GreenSquare.png");
 		return ic.getImage();
 	}
 	
