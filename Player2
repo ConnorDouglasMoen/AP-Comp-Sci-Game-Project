@@ -121,8 +121,9 @@ public class Player2 extends Player{
 			g2d.setColor(Color.BLUE);
 			g2d.draw(powerBounds());
 			}
-			g2d.setColor(Color.BLACK);
+			g2d.setColor(Color.BLUE);
 			g2d.drawString("Player 2", 345, 57);
+			g2d.setColor(Color.black);
 			g2d.drawRect(399, 44, 76, 16);
 			g2d.drawString("Level "+GameFrame.level, 220, 25);
 			//Above draws the level on the top middle of the screen
@@ -142,6 +143,7 @@ public class Player2 extends Player{
 			g2d.fillRect(400, 45, lives, 15);
 			//Draws the health bar with the correct color based on health left
 			g2d.setColor(Color.black);
+			g2d.drawString(String.valueOf(Main.Score), 15, 25);
 			g2d.draw(offRight());
 			g2d.draw(offBottom());
 			g2d.draw(offLeft());
@@ -173,7 +175,8 @@ public class Player2 extends Player{
 					break;
 					
 					case 5:
-						g2d.drawString("FUCK", 100, 45);
+						g2d.drawString("DUDE,", 118, 55);
+						g2d.drawString("WHERE'S MY SHIP?", 92, 75);
 					break;
 					
 					case 6:
@@ -185,7 +188,7 @@ public class Player2 extends Player{
 		
 		public Image getPlayerImg(){
 			
-			ImageIcon ic = new ImageIcon("C:/GameImages/Ship2.png");
+			ImageIcon ic = new ImageIcon("P:/GameImages/Ship2.png");
 			return ic.getImage();
 			//gets player image
 		}
