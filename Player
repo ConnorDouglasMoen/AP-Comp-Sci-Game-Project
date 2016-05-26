@@ -40,10 +40,10 @@ public class Player extends Entity{
 		//g2d.draw(getBounds());
 		if(powerUp){
 		g2d.setColor(Color.RED);
-		g2d.draw(powerBounds());
-		if(!Main.twoplayer)
-			g2d.drawString(String.valueOf(rScore), powerUpX, powerUpSpeed);
-			//TODO change so that that correct score prints out with power up block
+		g2d.draw(powerBounds());	
+		}
+		if(!powerUp && !Main.twoplayer){
+			g2d.drawString("+"+String.valueOf(rScore), 50, 25);
 		}
 		g2d.setColor(Color.RED);
 		g2d.drawString("Player 1", 345, 35);
@@ -98,11 +98,12 @@ public class Player extends Entity{
 				break;
 				
 				case 5:
-					g2d.drawString("FUCK", 100, 25);
+					g2d.drawString("DUDE", 118, 25);
+					g2d.drawString("WHERE'S MY SHIP?", 92, 40);
 				break;
 				
 				case 6:
-					g2d.drawString("ENEMIES SLOW", 100, 25);
+					g2d.drawString("ENEMIES SLOW", 95, 25);
 				break;
 			}
 		}
@@ -110,7 +111,7 @@ public class Player extends Entity{
 	
 	public Image getPlayerImg(){
 		
-		ImageIcon ic = new ImageIcon("C:/GameImages/Ship.png");
+		ImageIcon ic = new ImageIcon("P:/GameImages/Ship.png");
 		return ic.getImage();
 		//gets player image
 	}
@@ -202,7 +203,7 @@ public class Player extends Entity{
 						try {
 							GF.gameOver();
 						} catch (IOException e) {
-							// TODO Auto-generated catch block
+							
 							e.printStackTrace();
 						}
 					}
@@ -259,7 +260,7 @@ public class Player extends Entity{
 			try {
 				GF.gameOver();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
+				
 				e.printStackTrace();
 			}
 		}
@@ -269,7 +270,7 @@ public class Player extends Entity{
 			try {
 				GF.gameOver();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
+				
 				e.printStackTrace();
 			}
 		}
@@ -280,7 +281,7 @@ public class Player extends Entity{
 		if(getBounds().intersects(powerBounds())){
 			Random r = new Random();
 			pickPower=r.nextInt(7);
-			//pickPower=0;
+			//pickPower=5;
 			
 			switch (pickPower){
 			
@@ -299,7 +300,7 @@ public class Player extends Entity{
 				try {
 					GF.gameOver();
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
+					
 					e.printStackTrace();
 				}
 			}
